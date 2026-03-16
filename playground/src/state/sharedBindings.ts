@@ -1,5 +1,5 @@
-import { createEngine } from "@ysaurnofsilraev/state-manager"
-import { useEngine } from "@ysaurnofsilraev/state-manager/react"
+import { createEngine } from "../../../src"
+import { useEngineValue } from "../../../src/react"
 
 export interface AppState {
   count: number
@@ -15,45 +15,38 @@ const initialState: AppState = {
 
 export const appEngine = createEngine(initialState)
 
-export function useSharedState(): AppState {
-  return useEngine(appEngine)
-}
-
 export function useCount(): number {
-  return useSharedState().count
+  return useEngineValue(appEngine, "count")
 }
 
 export function useSharedText(): string {
-  return useSharedState().sharedText
+  return useEngineValue(appEngine, "sharedText")
 }
 
 export function useFlagEnabled(): boolean {
-  return useSharedState().flagEnabled
+  return useEngineValue(appEngine, "flagEnabled")
 }
 
 export const counterActions = {
   increment(): void {
-    appEngine.updateValue((prev) => ({ ...prev, count: prev.count + 1 }))
+    appEngine.updateValue("count", (prev) => prev + 1)
   },
   decrement(): void {
-    appEngine.updateValue((prev) => ({ ...prev, count: prev.count - 1 }))
+    appEngine.updateValue("count", (prev) => prev - 1)
   },
   reset(): void {
-    appEngine.updateValue((prev) => ({ ...prev, count: 0 }))
+    appEngine.setValue("count", 0)
   }
 }
 
 export const textActions = {
   set(value: string): void {
-    appEngine.updateValue((prev) => ({ ...prev, sharedText: value }))
+    appEngine.setValue("sharedText", value)
   }
 }
 
 export const flagActions = {
   toggle(): void {
-    appEngine.updateValue((prev) => ({
-      ...prev,
-      flagEnabled: !prev.flagEnabled
-    }))
+    appEngine.updateValue("flagEnabled", (prev) => !prev)
   }
 }

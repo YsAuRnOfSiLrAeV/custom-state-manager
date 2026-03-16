@@ -1,4 +1,4 @@
-export { createEngine } from "./core"
+export { createEngine } from "./core/index.js"
 export type {
   Primitive,
   StateMap,
@@ -6,4 +6,4 @@ export type {
   Listener,
   Updater,
   Engine
-} from "./core"
+} from "./core/index.js"

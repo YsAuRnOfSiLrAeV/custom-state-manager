@@ -1,4 +1,4 @@
-export { createEngine } from "./engine"
+export { createEngine } from "./engine.js"
 export type {
   Primitive,
   StateMap,
@@ -6,4 +6,4 @@ export type {
   Listener,
   Updater,
   Engine
-} from "./types"
+} from "./types.js"
