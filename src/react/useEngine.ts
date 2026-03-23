@@ -1,6 +1,10 @@
 import { useSyncExternalStore } from "react"
 import type { Engine } from "../core/index.js"
 
+/**
+ * Total-state hook.
+ * Subscribes to all state changes and returns full snapshot.
+ */
 export function useEngine<S>(engine: Engine<S>): S {
   return useSyncExternalStore(
     engine.subscribeTotal,
@@ -9,6 +13,10 @@ export function useEngine<S>(engine: Engine<S>): S {
   )
 }
 
+/**
+ * Key-based hook.
+ * Subscribes to one key and returns current value of that key.
+ */
 export function useEngineValue<S, K extends keyof S>(
   engine: Engine<S>,
   key: K
@@ -20,6 +28,11 @@ export function useEngineValue<S, K extends keyof S>(
   )
 }
 
+/**
+ * Multi-key derived hook.
+ * Subscribes to listed keys and computes derived result via selector(state).
+ * 'keys' must include all fields used inside 'selector'.
+ */
 export function useEngineMultipleValues<S, R, K extends keyof S>(
   engine: Engine<S>,
   keys: readonly K[],
